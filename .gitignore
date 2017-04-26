@@ -1,0 +1,6 @@
+target/
+.settings/
+.classpath
+.project
+.factorypath
+log_dir_IS_UNDEFINED/
