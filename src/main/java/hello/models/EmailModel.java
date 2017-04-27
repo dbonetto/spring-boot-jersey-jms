@@ -1,14 +1,20 @@
 package hello.models;
 
-public class Email {
+import java.io.Serializable;
 
-    private String to;
+public class EmailModel implements Serializable {
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 500558177182555360L;
+	private String to;
     private String body;
 
-    public Email() {
+    public EmailModel() {
     }
 
-    public Email(String to, String body) {
+    public EmailModel(String to, String body) {
         this.to = to;
         this.body = body;
     }

@@ -1,9 +1,9 @@
 package hello;
 
 import javax.jms.ConnectionFactory;
-import javax.ws.rs.core.Application;
 
-import org.springframework.boot.SpringApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -13,24 +13,27 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
-import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
-import org.springframework.jms.support.converter.MessageConverter;
-import org.springframework.jms.support.converter.MessageType;
 
-import hello.models.Email;
+import hello.models.EmailModel;
+import hello.services.EmailSender;
+import hello.services.MessageProducer;
 
 @SpringBootApplication
 @EnableJms
 public class HelloApplication extends SpringBootServletInitializer {
 
+	static final Logger LOG = LoggerFactory.getLogger(HelloApplication.class);
+	
 	public static void main(String[] args) {		
 		ConfigurableApplicationContext context = new HelloApplication().configure(new SpringApplicationBuilder(HelloApplication.class)).run(args);
-		JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
-
         // Send a message with a POJO - the template reuse the message converter
-        System.out.println("Sending an email message.");
-        jmsTemplate.convertAndSend("mailbox", new Email("info@example.com", "Hello, application is started!"));
+		EmailSender senderEmail = context.getBean(EmailSender.class);
+		LOG.info("Sending an email to queue");        
+        senderEmail.sendEmail(new EmailModel("info@example.com", "Hello, application is started!"));
+        // Send a message with a POJO - the template reuse the message converter
+		MessageProducer senderMessage = context.getBean(MessageProducer.class);
+		LOG.info("Sending a message to topic");        
+		senderMessage.sendMessage("Hello, application is started!");
 	}
 
 	@Bean
@@ -42,11 +45,4 @@ public class HelloApplication extends SpringBootServletInitializer {
         return factory;
     }
 
-    @Bean // Serialize message content to json using TextMessage
-    public MessageConverter jacksonJmsMessageConverter() {
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        converter.setTargetType(MessageType.TEXT);
-        converter.setTypeIdPropertyName("_type");
-        return converter;
-    }
 }
