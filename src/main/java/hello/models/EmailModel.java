@@ -2,7 +2,7 @@ package hello.models;
 
 import java.io.Serializable;
 
-public class Email implements Serializable {
+public class EmailModel implements Serializable {
 
     /**
 	 * 
@@ -11,10 +11,10 @@ public class Email implements Serializable {
 	private String to;
     private String body;
 
-    public Email() {
+    public EmailModel() {
     }
 
-    public Email(String to, String body) {
+    public EmailModel(String to, String body) {
         this.to = to;
         this.body = body;
     }

@@ -6,19 +6,21 @@ import javax.jms.ObjectMessage;
 import javax.jms.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
 
-import hello.models.Email;
+import hello.models.EmailModel;
 
 @Component
-public class MessageSender {
+public class EmailSender {
  
-    @Autowired 
+    @Autowired
+    @Qualifier("EmailQueue")
     JmsTemplate jmsTemplate;
  
-    public void sendEmail(final Email email) {
+    public void sendEmail(final EmailModel email) {
         jmsTemplate.send(new MessageCreator(){
                 @Override
                 public Message createMessage(Session session) throws JMSException {

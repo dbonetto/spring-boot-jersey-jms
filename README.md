@@ -10,8 +10,8 @@ The retrieve imageID from docker image list:
 Finally run docker container:
 > docker run -p 61616:61616 -p 8161:8161 --name activemq <imageID>
 
-Access web console to create _email-queue_:
-> http://localhost:8161/admin/index.jsp (user: admin, pwd: admin)
+You can access administrator web console from:
+> http://localhost:8161/admin/index.jsp (user: admin, password: admin)
 
 Message broker is accessible from:
 > tcp://localhost:61616
