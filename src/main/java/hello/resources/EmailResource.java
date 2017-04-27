@@ -9,20 +9,20 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 
 import hello.models.Email;
+import hello.services.MessageSender;
 
-@Path("/message")
+@Path("/email")
 @Produces("application/json")
-public class MessageResource {
+public class EmailResource {
 
-	@Autowired JmsTemplate jmsTemplate;
+	@Autowired MessageSender sender;
 	
 	@POST
 	@Path("/send")
 	public Response send(@DefaultValue("info@example.com") @QueryParam("address") String address, @QueryParam("message") @NotNull String message) {
-		jmsTemplate.convertAndSend("mailbox", new Email(address, message));
+		sender.sendEmail(new Email(address, message));
 		return Response.accepted().build();
 	}
 	

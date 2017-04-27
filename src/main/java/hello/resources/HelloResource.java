@@ -10,13 +10,13 @@ import javax.ws.rs.core.Response;
 import org.slf4j.helpers.MessageFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import hello.TestBean;
+import hello.NameBean;
 
 @Path("/hello")
 @Produces("application/json")
 public class HelloResource {
 
-	@Autowired TestBean tb;
+	@Autowired NameBean tb;
 	
 	@GET	
 	public Response message(@QueryParam("name") @DefaultValue("World") String name) {

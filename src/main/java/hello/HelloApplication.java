@@ -1,9 +1,7 @@
 package hello;
 
 import javax.jms.ConnectionFactory;
-import javax.ws.rs.core.Application;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -13,12 +11,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
 import hello.models.Email;
+import hello.services.MessageSender;
 
 @SpringBootApplication
 @EnableJms
@@ -26,11 +24,10 @@ public class HelloApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {		
 		ConfigurableApplicationContext context = new HelloApplication().configure(new SpringApplicationBuilder(HelloApplication.class)).run(args);
-		JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
-
+		MessageSender sender = context.getBean(MessageSender.class);
         // Send a message with a POJO - the template reuse the message converter
         System.out.println("Sending an email message.");
-        jmsTemplate.convertAndSend("mailbox", new Email("info@example.com", "Hello, application is started!"));
+        sender.sendEmail(new Email("info@example.com", "Hello, application is started!"));
 	}
 
 	@Bean
