@@ -1,10 +1,7 @@
 # spring-boot-jersey-jms
 This repository contains my Java POC to make ActiveMQ working with Jersey and Spring Boot.
 
-In order to configure environment, first pull activemq docker image from remote repository:
-> docker pull webcenter/activemq
-
-Then run docker container:
+To make the environment work you have to run the following docker containers:
 > docker run -p 61616:61616 -p 8161:8161 --name activemq webcenter/activemq
 
 You can access administrator web console from:
