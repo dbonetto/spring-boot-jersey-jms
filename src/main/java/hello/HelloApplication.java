@@ -10,9 +10,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import hello.models.EmailModel;
 import hello.services.EmailSender;
@@ -20,6 +22,7 @@ import hello.services.MessageProducer;
 
 @SpringBootApplication
 @EnableJms
+@EnableMongoRepositories
 public class HelloApplication extends SpringBootServletInitializer {
 
 	static final Logger LOG = LoggerFactory.getLogger(HelloApplication.class);
@@ -44,5 +47,5 @@ public class HelloApplication extends SpringBootServletInitializer {
         // You could still override some of Boot's default if necessary.
         return factory;
     }
-
+	
 }
