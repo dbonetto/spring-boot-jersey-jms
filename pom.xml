@@ -3,8 +3,9 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.springframework</groupId>
-    <artifactId>gs-serving-web-content</artifactId>
+    <groupId>poc</groupId>
+    <artifactId>hello</artifactId>
+    <name>hello</name>    
     <version>0.1.0</version>
 
     <parent>
@@ -46,17 +47,11 @@
             <artifactId>activemq-broker</artifactId>
         </dependency>
         
-        <!-- Jackson -->
+        <!-- Jackson -->        
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-
-		<!-- JPA -->        
-        <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>        
+		    <groupId>org.glassfish.jersey.media</groupId>
+		    <artifactId>jersey-media-json-jackson</artifactId>
+		</dependency>
 
 		<!-- MongoDB -->
 		<dependency>
@@ -64,6 +59,13 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
         
+        <!-- Swagger API -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jersey2-jaxrs</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+		
     </dependencies>
 
     <properties>
